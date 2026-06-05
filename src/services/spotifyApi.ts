@@ -26,7 +26,6 @@ async function put<T>(path: string, body?: unknown): Promise<T> {
 export interface AuthStatus {
   logged_in: boolean;
   has_client_id: boolean;
-  has_client_secret: boolean;
 }
 
 export interface Track {
@@ -86,10 +85,6 @@ export interface PlaylistTrack {
 export const spotifyApi = {
   async getAuthStatus(): Promise<AuthStatus> {
     return get<AuthStatus>("/auth/status");
-  },
-
-  async login(clientId: string, clientSecret: string): Promise<{ auth_url?: string; error?: string }> {
-    return post("/auth/login", { client_id: clientId, client_secret: clientSecret });
   },
 
   async logout(): Promise<{ success: boolean }> {
