@@ -61,6 +61,28 @@ export interface PlayerStatus {
   repeat?: string;
 }
 
+export interface Device {
+  id: string;
+  name: string;
+  type: string;
+  is_active: boolean;
+  volume_percent: number;
+}
+
+export interface RecentItem {
+  track: Track;
+  played_at: string;
+}
+
+export interface PlaylistTrack {
+  id: string;
+  name: string;
+  artist: string;
+  album: string;
+  duration_ms: number;
+  uri: string;
+}
+
 export const spotifyApi = {
   async getAuthStatus(): Promise<AuthStatus> {
     return get<AuthStatus>("/auth/status");
@@ -108,5 +130,44 @@ export const spotifyApi = {
 
   async setVolume(volume: number): Promise<{ success: boolean }> {
     return put("/api/player/volume", { volume });
+  },
+
+  async getPlaylistTracks(
+    playlistId: string,
+    offset = 0
+  ): Promise<{ tracks: PlaylistTrack[] }> {
+    return get<{ tracks: PlaylistTrack[] }>(
+      `/api/playlists/${encodeURIComponent(playlistId)}/tracks?offset=${offset}`
+    );
+  },
+
+  async getRecentlyPlayed(): Promise<{ items: RecentItem[] }> {
+    return get<{ items: RecentItem[] }>("/api/player/recently-played");
+  },
+
+  async setShuffle(state: boolean): Promise<{ success: boolean }> {
+    return put("/api/player/shuffle", { state });
+  },
+
+  async setRepeat(state: "off" | "context" | "track"): Promise<{ success: boolean }> {
+    return put("/api/player/repeat", { state });
+  },
+
+  async getDevices(): Promise<{ devices: Device[] }> {
+    return get<{ devices: Device[] }>("/api/player/devices");
+  },
+
+  async transferPlayback(deviceId: string): Promise<{ success: boolean }> {
+    return put("/api/player/transfer", { device_id: deviceId });
+  },
+
+  async playTrack(
+    trackUri: string,
+    contextUri?: string
+  ): Promise<{ success: boolean }> {
+    return post("/api/player/play", {
+      track_uri: trackUri,
+      ...(contextUri !== undefined ? { context_uri: contextUri } : {}),
+    });
   },
 };

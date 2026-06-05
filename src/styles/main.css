@@ -503,3 +503,49 @@
 .error-icon { font-size: 36px; }
 .error-title { font-size: 16px; font-weight: 700; color: var(--danger); }
 .error-desc { font-size: 12px; color: var(--text-muted); max-width: 260px; }
+
+/* ── Shuffle / Repeat mode buttons ──────────────────────────── */
+.ctrl-btn--mode {
+  width: 36px;
+  height: 36px;
+  font-size: 15px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, transform 0.1s;
+  position: relative;
+}
+.ctrl-btn--mode:hover { transform: scale(1.15); }
+.ctrl-btn--mode:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+
+/* ── Player controls gap update (5 buttons now) ─────────────── */
+.player-controls { gap: 10px; }
+
+/* ── Playlist search bar ─────────────────────────────────────── */
+.search-bar input::placeholder { color: var(--text-dim); }
+
+/* ── Playlist item focused state (keyboard nav) ──────────────── */
+.playlist-item.focused {
+  background: var(--bg-hover);
+  border-left: 2px solid var(--green);
+}
+
+/* ── Tab content — ensure app fills height correctly ─────────── */
+.app {
+  min-height: 100%;
+  overflow: hidden;
+}
+
+/* ── Settings screen rows ────────────────────────────────────── */
+.settings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--bg-hover);
+  font-size: 13px;
+}
