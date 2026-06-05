@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spotify Launcher Pro – Steam Deck Mockup</title>
+<style>
+  /* ── Page layout ─────────────────────────────────────── */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0a0a0f;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 48px;
+  }
+
+  h1 {
+    color: #1DB954;
+    font-size: 22px;
+    letter-spacing: 1px;
+    font-weight: 800;
+  }
+  h1 span { color: #888; font-size: 14px; font-weight: 400; margin-left: 12px; }
+
+  .screens-row {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .screen-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .screen-label {
+    color: #888;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+  }
+
+  /* ── Steam Deck QAM frame ────────────────────────────── */
+  .deck-frame {
+    background: #1a1a24;
+    border: 2px solid #2a2a3a;
+    border-radius: 16px;
+    width: 390px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px #0d0d18,
+      0 8px 40px rgba(0,0,0,0.8),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+    position: relative;
+  }
+
+  /* top bar mimicking Decky header */
+  .deck-qam-header {
+    background: #111118;
+    border-bottom: 1px solid #222230;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .deck-qam-title {
+    color: #ccc;
+    font-size: 13px;
+    font-weight: 600;
+    flex: 1;
+  }
+  .deck-qam-dots {
+    display: flex;
+    gap: 5px;
+  }
+  .deck-qam-dots span {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #333;
+  }
+  .deck-qam-dots span:first-child { background: #1DB954; }
+
+  /* plugin content area */
+  .plugin-panel {
+    background: #121212;
+    color: #fff;
+    font-size: 13px;
+    padding: 10px;
+    min-height: 480px;
+    max-height: 540px;
+    overflow-y: auto;
+  }
+  .plugin-panel::-webkit-scrollbar { width: 4px; }
+  .plugin-panel::-webkit-scrollbar-track { background: transparent; }
+  .plugin-panel::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+  /* Decky bottom nav (fake) */
+  .deck-qam-footer {
+    background: #111118;
+    border-top: 1px solid #222230;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .deck-nav-btn {
+    background: #222230;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 4px 10px;
+    color: #aaa;
+    font-size: 11px;
+    cursor: pointer;
+  }
+  .deck-nav-btn.active { background: #1DB954; color: #000; border-color: #1DB954; font-weight: 700; }
+
+  /* ══════════════════════════════════════════════════════
+     PLUGIN CSS (mirrors src/styles/main.css)
+  ══════════════════════════════════════════════════════ */
+  :root {
+    --bg: #121212;
+    --bg-surface: #1e1e1e;
+    --bg-hover: #282828;
+    --green: #1db954;
+    --green-dark: #179443;
+    --text: #ffffff;
+    --text-muted: #b3b3b3;
+    --text-dim: #6a6a6a;
+    --danger: #e35454;
+    --radius: 8px;
+    --radius-sm: 4px;
+  }
+
+  .app { background: var(--bg); color: var(--text); display: flex; flex-direction: column; gap: 0; }
+
+  .app-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 4px 10px;
+    border-bottom: 1px solid var(--bg-hover);
+    margin-bottom: 10px;
+  }
+  .app-logo { font-size: 18px; }
+  .app-title { flex: 1; font-size: 15px; font-weight: 700; color: var(--green); }
+  .connected-dot { color: var(--green); font-size: 11px; }
+
+  .tab-bar { display: flex; gap: 4px; margin-bottom: 10px; }
+  .tab-btn {
+    flex: 1;
+    padding: 7px 4px;
+    background: var(--bg-surface);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: 11px;
+    cursor: pointer;
+    text-align: center;
+  }
+  .tab-btn.active {
+    background: var(--bg-hover);
+    border-color: var(--green);
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  /* — Login — */
+  .login-form { display: flex; flex-direction: column; gap: 7px; }
+  .section-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .info-box {
+    background: var(--bg-surface);
+    border-radius: var(--radius);
+    padding: 9px 11px;
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .info-box code { display: block; margin-top: 5px; color: var(--green); font-size: 10px; word-break: break-all; }
+  .field-label { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+  .text-input {
+    width: 100%;
+    padding: 9px 11px;
+    background: var(--bg-surface);
+    border: 1px solid var(--bg-hover);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-size: 13px;
+  }
+  .text-input.focused { border-color: var(--green); }
+  .btn-primary {
+    width: 100%;
+    padding: 11px;
+    background: var(--green);
+    color: #000;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  /* — Playlists — */
+  .list-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .btn-icon { background: transparent; border: none; color: var(--text-muted); font-size: 16px; cursor: pointer; padding: 2px; }
+  .playlist-list { display: flex; flex-direction: column; gap: 4px; }
+  .playlist-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    background: var(--bg-surface);
+    border-radius: var(--radius);
+    padding: 7px 9px;
+  }
+  .playlist-item.highlighted { background: var(--bg-hover); outline: 1px solid rgba(29,185,84,0.3); }
+  .playlist-thumb {
+    width: 40px; height: 40px;
+    border-radius: var(--radius-sm);
+    overflow: hidden; flex-shrink: 0;
+  }
+  .playlist-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .playlist-thumb-placeholder {
+    width: 100%; height: 100%;
+    background: var(--bg-hover);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; color: var(--text-dim);
+  }
+  .playlist-info { flex: 1; min-width: 0; }
+  .playlist-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .playlist-meta { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+  .btn-play {
+    background: var(--green); color: #000; border: none;
+    border-radius: 50%; width: 32px; height: 32px;
+    font-size: 14px; cursor: pointer; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* — Player / NowPlaying — */
+  .now-playing {
+    display: flex; gap: 10px;
+    background: var(--bg-surface);
+    border-radius: var(--radius);
+    padding: 10px;
+    margin-bottom: 12px;
+  }
+  .np-art {
+    position: relative;
+    width: 60px; height: 60px;
+    border-radius: var(--radius-sm);
+    overflow: hidden; flex-shrink: 0;
+  }
+  .np-art img { width: 100%; height: 100%; object-fit: cover; }
+  .np-playing-indicator {
+    position: absolute; bottom: 2px; right: 2px;
+    background: var(--green); color: #000;
+    border-radius: 50%; width: 16px; height: 16px;
+    font-size: 9px; display: flex; align-items: center; justify-content: center;
+  }
+  .np-details { flex: 1; min-width: 0; }
+  .np-track-name { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .np-artist { font-size: 11px; color: var(--green); margin-top: 2px; }
+  .np-album { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+  .np-progress-row { display: flex; align-items: center; gap: 5px; margin-top: 7px; }
+  .np-time { font-size: 10px; color: var(--text-muted); white-space: nowrap; }
+  .np-progress-bar { flex: 1; height: 3px; background: var(--bg-hover); border-radius: 2px; overflow: hidden; }
+  .np-progress-fill { height: 100%; background: var(--green); border-radius: 2px; }
+
+  .player-controls { display: flex; justify-content: center; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .ctrl-btn {
+    background: var(--bg-surface); border: none; color: var(--text);
+    border-radius: 50%; width: 40px; height: 40px;
+    font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .ctrl-btn.main {
+    width: 52px; height: 52px; font-size: 22px;
+    background: var(--green); color: #000;
+  }
+
+  .volume-row { display: flex; align-items: center; gap: 6px; margin: 6px 0; }
+  .volume-icon { font-size: 13px; }
+  .volume-slider-mock {
+    flex: 1; height: 4px; background: var(--bg-hover); border-radius: 2px; position: relative;
+  }
+  .volume-fill { height: 100%; background: var(--green); border-radius: 2px; width: 70%; }
+  .volume-thumb {
+    position: absolute; top: 50%; right: 30%; transform: translate(50%, -50%);
+    width: 12px; height: 12px; border-radius: 50%; background: var(--green);
+  }
+  .volume-value { font-size: 11px; color: var(--text-muted); min-width: 30px; text-align: right; }
+  .player-status { text-align: center; font-size: 11px; padding: 3px; color: var(--green); margin-top: 4px; }
+
+  /* — Settings — */
+  .settings-screen {}
+  .settings-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 0; border-bottom: 1px solid var(--bg-hover); font-size: 12px;
+  }
+  .status-badge { padding: 2px 7px; border-radius: 20px; font-size: 10px; font-weight: 600; }
+  .status-ok { background: rgba(29,185,84,0.15); color: var(--green); }
+  .settings-info { font-size: 11px; color: var(--text-muted); margin-top: 10px; line-height: 1.5; }
+  .btn-danger {
+    width: 100%; padding: 10px;
+    background: var(--danger); color: #fff; border: none;
+    border-radius: var(--radius); font-size: 13px; font-weight: 600;
+    cursor: pointer; margin-top: 14px; text-align: center;
+  }
+
+  /* offline banner */
+  .offline-banner {
+    background: rgba(227,84,84,0.15); border: 1px solid var(--danger);
+    color: var(--danger); border-radius: var(--radius-sm);
+    padding: 5px 9px; font-size: 11px; margin-bottom: 8px; text-align: center;
+  }
+
+  /* skeleton */
+  .skeleton-list { display: flex; flex-direction: column; gap: 4px; }
+  .skeleton-item {
+    height: 54px; border-radius: var(--radius);
+    background: linear-gradient(90deg,#1e1e1e 25%,#282828 50%,#1e1e1e 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+  /* ── Annotations ──────────────────────────────────────── */
+  .annotations {
+    margin-top: 10px;
+    width: 390px;
+  }
+  .ann { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 5px; font-size: 11px; color: #666; }
+  .ann-dot { width: 6px; height: 6px; border-radius: 50%; background: #1DB954; margin-top: 3px; flex-shrink: 0; }
+  .ann strong { color: #aaa; }
+
+  /* ── Legend strip ─────────────────────────────────────── */
+  .legend {
+    width: 100%;
+    max-width: 1700px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 18px 24px;
+    background: #161620;
+    border: 1px solid #222;
+    border-radius: 12px;
+    font-size: 12px;
+    color: #888;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 14px; height: 14px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<h1>Spotify Launcher Pro <span>Steam Deck QAM mockup</span></h1>
+
+<div class="screens-row">
+
+  <!-- ═══════════════════════════════════ SCREEN 1: LOGIN ═══ -->
+  <div class="screen-wrap">
+    <div class="screen-label">1 — Přihlášení</div>
+    <div class="deck-frame">
+      <div class="deck-qam-header">
+        <div class="deck-qam-dots"><span></span><span></span><span></span></div>
+        <div class="deck-qam-title">Quick Access Menu</div>
+        <span style="color:#555;font-size:11px">⚙</span>
+      </div>
+      <div class="plugin-panel">
+        <div class="app">
+          <div class="app-header">
+            <span class="app-logo">🎵</span>
+            <span class="app-title">Spotify Launcher Pro</span>
+          </div>
+          <div class="login-form">
+            <div class="section-title">Připojit Spotify</div>
+            <div class="info-box">
+              Vytvoř aplikaci na <strong>developer.spotify.com/dashboard</strong> a nastav Redirect URI na:
+              <code>http://localhost:8765/auth/callback</code>
+            </div>
+            <div class="field-label">Client ID</div>
+            <input class="text-input focused" type="text" value="a1b2c3d4e5f6..." readonly>
+            <div class="field-label">Client Secret</div>
+            <input class="text-input" type="password" value="••••••••••••••••" readonly>
+            <div class="btn-primary">🎵 Přihlásit se přes Spotify</div>
+          </div>
+        </div>
+      </div>
+      <div class="deck-qam-footer">
+        <div class="deck-nav-btn">✕ Zavřít</div>
+        <div class="deck-nav-btn active">↩ Potvrdit</div>
+      </div>
+    </div>
+    <div class="annotations">
+      <div class="ann"><div class="ann-dot"></div><div><strong>Zelené pole</strong> = aktivní focus (ovládání D-padem)</div></div>
+      <div class="ann"><div class="ann-dot"></div><div>Validace formátu 32-hex znaků při odeslání</div></div>
+      <div class="ann"><div class="ann-dot"></div><div>OAuth odkaz se otevře v prohlížeči na Decku</div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ SCREEN 2: PLAYLISTS ═══ -->
+  <div class="screen-wrap">
+    <div class="screen-label">2 — Playlisty</div>
+    <div class="deck-frame">
+      <div class="deck-qam-header">
+        <div class="deck-qam-dots"><span></span><span></span><span></span></div>
+        <div class="deck-qam-title">Quick Access Menu</div>
+        <span style="color:#555;font-size:11px">⚙</span>
+      </div>
+      <div class="plugin-panel">
+        <div class="app">
+          <div class="app-header">
+            <span class="app-logo">🎵</span>
+            <span class="app-title">Spotify Launcher Pro</span>
+            <span class="connected-dot">●</span>
+          </div>
+          <div class="tab-bar">
+            <div class="tab-btn active">📋 Playlisty</div>
+            <div class="tab-btn">🎶 Přehrávač</div>
+            <div class="tab-btn">⚙️ Nastavení</div>
+          </div>
+          <div class="list-header">
+            <span class="section-title">Playlisty (8)</span>
+            <button class="btn-icon">🔄</button>
+          </div>
+          <div class="playlist-list">
+            <!-- Highlighted (selected) row -->
+            <div class="playlist-item highlighted">
+              <div class="playlist-thumb">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a472a,#1DB954);display:flex;align-items:center;justify-content:center;font-size:16px;">🎸</div>
+              </div>
+              <div class="playlist-info">
+                <div class="playlist-name">Rock Classics</div>
+                <div class="playlist-meta">142 skladeb</div>
+              </div>
+              <div class="btn-play">▶</div>
+            </div>
+            <div class="playlist-item">
+              <div class="playlist-thumb">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1a6e,#7b2ff7);display:flex;align-items:center;justify-content:center;font-size:16px;">🎧</div>
+              </div>
+              <div class="playlist-info">
+                <div class="playlist-name">Chill Lofi Mix</div>
+                <div class="playlist-meta">87 skladeb</div>
+              </div>
+              <div class="btn-play">▶</div>
+            </div>
+            <div class="playlist-item">
+              <div class="playlist-thumb">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#6e1a1a,#e84444);display:flex;align-items:center;justify-content:center;font-size:16px;">🔥</div>
+              </div>
+              <div class="playlist-info">
+                <div class="playlist-name">Gaming Hype 2024</div>
+                <div class="playlist-meta">56 skladeb</div>
+              </div>
+              <div class="btn-play">▶</div>
+            </div>
+            <div class="playlist-item">
+              <div class="playlist-thumb">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a5a6e,#1DB9B9);display:flex;align-items:center;justify-content:center;font-size:16px;">🌊</div>
+              </div>
+              <div class="playlist-info">
+                <div class="playlist-name">Deep Focus</div>
+                <div class="playlist-meta">201 skladeb</div>
+              </div>
+              <div class="btn-play">▶</div>
+            </div>
+            <div class="playlist-item">
+              <div class="playlist-thumb">
+                <div class="playlist-thumb-placeholder">♪</div>
+              </div>
+              <div class="playlist-info">
+                <div class="playlist-name">Oblíbené skladby</div>
+                <div class="playlist-meta">1 337 skladeb</div>
+              </div>
+              <div class="btn-play">▶</div>
+            </div>
+            <div class="playlist-item">
+              <div class="playlist-thumb">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#3d1a6e,#9b4dca);display:flex;align-items:center;justify-content:center;font-size:16px;">✨</div>
+              </div>
+              <div class="playlist-info">
+                <div class="playlist-name">Late Night Drive</div>
+                <div class="playlist-meta">34 skladeb</div>
+              </div>
+              <div class="btn-play">▶</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="deck-qam-footer">
+        <div class="deck-nav-btn">↕ Scroll</div>
+        <div class="deck-nav-btn active">▶ Přehrát</div>
+      </div>
+    </div>
+    <div class="annotations">
+      <div class="ann"><div class="ann-dot"></div><div><strong>Zelený rámeček</strong> = aktuálně focusovaný playlist</div></div>
+      <div class="ann"><div class="ann-dot"></div><div>Scrollable seznam, miniatura + počet skladeb</div></div>
+      <div class="ann"><div class="ann-dot"></div><div>🔄 tlačítko obnoví cache (force refresh API)</div></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════ SCREEN 3: PLAYER ═══ -->
+  <div class="screen-wrap">
+    <div class="screen-label">3 — Přehrávač</div>
+    <div class="deck-frame">
+      <div class="deck-qam-header">
+        <div class="deck-qam-dots"><span></span><span></span><span></span></div>
+        <div class="deck-qam-title">Quick Access Menu</div>
+        <span style="color:#555;font-size:11px">⚙</span>
+      </div>
+      <div class="plugin-panel">
+        <div class="app">
+          <div class="app-header">
+            <span class="app-logo">🎵</span>
+            <span class="app-title">Spotify Launcher Pro</span>
+            <span class="connected-dot">●</span>
+          </div>
+          <div class="tab-bar">
+            <div class="tab-btn">📋 Playlisty</div>
+            <div class="tab-btn active">🎶 Přehrávač</div>
+            <div class="tab-btn">⚙️ Nastavení</div>
+          </div>
+          <!-- Now Playing -->
+          <div class="now-playing">
+            <div class="np-art">
+              <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a472a,#1DB954);display:flex;align-items:center;justify-content:center;font-size:28px;">🎸</div>
+              <div class="np-playing-indicator">▶</div>
+            </div>
+            <div class="np-details">
+              <div class="np-track-name">Highway to Hell</div>
+              <div class="np-artist">AC/DC</div>
+              <div class="np-album">Highway to Hell (1979)</div>
+              <div class="np-progress-row">
+                <span class="np-time">1:42</span>
+                <div class="np-progress-bar">
+                  <div class="np-progress-fill" style="width:48%;"></div>
+                </div>
+                <span class="np-time">3:28</span>
+              </div>
+            </div>
+          </div>
+          <!-- Controls -->
+          <div class="player-controls">
+            <div class="ctrl-btn">⏮</div>
+            <div class="ctrl-btn main">⏸</div>
+            <div class="ctrl-btn">⏭</div>
+          </div>
+          <!-- Volume -->
+          <div class="volume-row">
+            <span class="volume-icon">🔈</span>
+            <div class="volume-slider-mock">
+              <div class="volume-fill"></div>
+              <div class="volume-thumb"></div>
+            </div>
+            <span class="volume-icon">🔊</span>
+            <span class="volume-value">70%</span>
+          </div>
+          <div class="player-status">▶ Přehrávání</div>
+        </div>
+      </div>
+      <div class="deck-qam-footer">
+        <div class="deck-nav-btn active">⏮⏭ Skip</div>
+        <div class="deck-nav-btn active">⏸ Pauza</div>
+      </div>
+    </div>
+    <div class="annotations">
+      <div class="ann"><div class="ann-dot"></div><div><strong>Album art</strong> + indikátor přehrávání (zelený kruh)</div></div>
+      <div class="ann"><div class="ann-dot"></div><div>Progress bar se aktualizuje každých 5 sekund</div></div>
+      <div class="ann"><div class="ann-dot"></div><div>Volume slider — PUT /api/player/volume</div></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ SCREEN 4: SETTINGS ══════ -->
+  <div class="screen-wrap">
+    <div class="screen-label">4 — Nastavení</div>
+    <div class="deck-frame">
+      <div class="deck-qam-header">
+        <div class="deck-qam-dots"><span></span><span></span><span></span></div>
+        <div class="deck-qam-title">Quick Access Menu</div>
+        <span style="color:#555;font-size:11px">⚙</span>
+      </div>
+      <div class="plugin-panel">
+        <div class="app">
+          <div class="app-header">
+            <span class="app-logo">🎵</span>
+            <span class="app-title">Spotify Launcher Pro</span>
+            <span class="connected-dot">●</span>
+          </div>
+          <div class="tab-bar">
+            <div class="tab-btn">📋 Playlisty</div>
+            <div class="tab-btn">🎶 Přehrávač</div>
+            <div class="tab-btn active">⚙️ Nastavení</div>
+          </div>
+          <div class="settings-screen">
+            <div class="section-title">Nastavení</div>
+            <div class="settings-row">
+              <span>Stav připojení</span>
+              <span class="status-badge status-ok">Připojeno ✅</span>
+            </div>
+            <div class="settings-row">
+              <span>Spotify účet</span>
+              <span style="color:#b3b3b3;font-size:11px;">Premium</span>
+            </div>
+            <div class="settings-row">
+              <span>Backend server</span>
+              <span style="color:#b3b3b3;font-size:11px;">localhost:8765</span>
+            </div>
+            <div class="settings-row">
+              <span>Verze pluginu</span>
+              <span style="color:#b3b3b3;font-size:11px;">1.0.0</span>
+            </div>
+            <div class="settings-info">
+              Pro změnu přihlašovacích údajů se odhlaste a přihlaste znovu s novým Client ID/Secret.
+            </div>
+            <div class="btn-danger">🚪 Odhlásit se</div>
+          </div>
+        </div>
+      </div>
+      <div class="deck-qam-footer">
+        <div class="deck-nav-btn">↕ Scroll</div>
+        <div class="deck-nav-btn active">↩ Vybrat</div>
+      </div>
+    </div>
+    <div class="annotations">
+      <div class="ann"><div class="ann-dot"></div><div><strong>Odhlášení</strong> = smaže token z disku, vrátí na Login</div></div>
+      <div class="ann"><div class="ann-dot"></div><div>Stav připojení se kontroluje při každém otevření QAM</div></div>
+    </div>
+  </div>
+
+</div><!-- /screens-row -->
+
+<!-- ══════════════════════ EDGE CASE ROW ══════════════ -->
+<div style="color:#888;font-size:13px;text-align:center;letter-spacing:2px;font-weight:600;text-transform:uppercase;">
+  Edge-case / error stavy
+</div>
+
+<div class="screens-row">
+
+  <!-- Loading skeleton -->
+  <div class="screen-wrap">
+    <div class="screen-label">Načítání playlistů</div>
+    <div class="deck-frame">
+      <div class="deck-qam-header">
+        <div class="deck-qam-dots"><span></span><span></span><span></span></div>
+        <div class="deck-qam-title">Quick Access Menu</div>
+        <span style="color:#555;font-size:11px">⚙</span>
+      </div>
+      <div class="plugin-panel">
+        <div class="app">
+          <div class="app-header">
+            <span class="app-logo">🎵</span>
+            <span class="app-title">Spotify Launcher Pro</span>
+            <span class="connected-dot">●</span>
+          </div>
+          <div class="tab-bar">
+            <div class="tab-btn active">📋 Playlisty</div>
+            <div class="tab-btn">🎶 Přehrávač</div>
+            <div class="tab-btn">⚙️ Nastavení</div>
+          </div>
+          <div class="list-header">
+            <span class="section-title">Playlisty</span>
+          </div>
+          <div class="skeleton-list">
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+            <div class="skeleton-item"></div>
+          </div>
+        </div>
+      </div>
+      <div class="deck-qam-footer">
+        <div class="deck-nav-btn" style="opacity:0.4">Načítám…</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offline player -->
+  <div class="screen-wrap">
+    <div class="screen-label">Offline stav</div>
+    <div class="deck-frame">
+      <div class="deck-qam-header">
+        <div class="deck-qam-dots"><span></span><span></span><span></span></div>
+        <div class="deck-qam-title">Quick Access Menu</div>
+        <span style="color:#555;font-size:11px">⚙</span>
+      </div>
+      <div class="plugin-panel">
+        <div class="app">
+          <div class="app-header">
+            <span class="app-logo">🎵</span>
+            <span class="app-title">Spotify Launcher Pro</span>
+            <span style="color:#e35454;font-size:11px;">●</span>
+          </div>
+          <div class="tab-bar">
+            <div class="tab-btn">📋 Playlisty</div>
+            <div class="tab-btn active">🎶 Přehrávač</div>
+            <div class="tab-btn">⚙️ Nastavení</div>
+          </div>
+          <div class="offline-banner">⚠️ Offline – nelze se připojit ke Spotify</div>
+          <div class="now-playing">
+            <div class="np-art">
+              <div style="width:100%;height:100%;background:#282828;display:flex;align-items:center;justify-content:center;font-size:28px;color:#555;">♪</div>
+            </div>
+            <div class="np-details">
+              <div class="np-track-name" style="color:#555;">— nic nehraje —</div>
+              <div class="np-artist" style="color:#555;">—</div>
+              <div class="np-progress-row">
+                <span class="np-time">0:00</span>
+                <div class="np-progress-bar"><div class="np-progress-fill" style="width:0"></div></div>
+                <span class="np-time">0:00</span>
+              </div>
+            </div>
+          </div>
+          <div class="player-controls">
+            <div class="ctrl-btn" style="opacity:.4">⏮</div>
+            <div class="ctrl-btn main" style="background:#333;color:#666;">▶</div>
+            <div class="ctrl-btn" style="opacity:.4">⏭</div>
+          </div>
+          <div class="player-status" style="color:#e35454;">⚫ Offline</div>
+        </div>
+      </div>
+      <div class="deck-qam-footer">
+        <div class="deck-nav-btn" style="opacity:0.4">Nedostupné</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Backend down -->
+  <div class="screen-wrap">
+    <div class="screen-label">Backend nedostupný</div>
+    <div class="deck-frame">
+      <div class="deck-qam-header">
+        <div class="deck-qam-dots"><span></span><span></span><span></span></div>
+        <div class="deck-qam-title">Quick Access Menu</div>
+        <span style="color:#555;font-size:11px">⚙</span>
+      </div>
+      <div class="plugin-panel" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:12px;padding:30px 16px;">
+        <div style="font-size:40px;">⚠️</div>
+        <div style="font-size:15px;font-weight:700;color:#e35454;">Backend nedostupný</div>
+        <div style="font-size:12px;color:#b3b3b3;max-width:240px;line-height:1.5;">
+          Spotify plugin není spuštěn. Restartuj Decky Loader.
+        </div>
+        <div class="btn-primary" style="width:auto;padding:10px 24px;margin-top:8px;">🔄 Zkusit znovu</div>
+      </div>
+      <div class="deck-qam-footer">
+        <div class="deck-nav-btn active">↩ Zkusit znovu</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OAuth step 2 -->
+  <div class="screen-wrap">
+    <div class="screen-label">OAuth – krok 2</div>
+    <div class="deck-frame">
+      <div class="deck-qam-header">
+        <div class="deck-qam-dots"><span></span><span></span><span></span></div>
+        <div class="deck-qam-title">Quick Access Menu</div>
+        <span style="color:#555;font-size:11px">⚙</span>
+      </div>
+      <div class="plugin-panel">
+        <div class="app">
+          <div class="app-header">
+            <span class="app-logo">🎵</span>
+            <span class="app-title">Spotify Launcher Pro</span>
+          </div>
+          <div class="login-form">
+            <div class="section-title">Krok 2: Otevři odkaz</div>
+            <p style="font-size:12px;color:#b3b3b3;line-height:1.5;margin:4px 0;">
+              Otevři následující URL v prohlížeči a přihlas se ke Spotify:
+            </p>
+            <div style="background:#1e1e1e;border-radius:8px;padding:10px;font-size:10px;color:#1DB954;word-break:break-all;font-family:monospace;max-height:72px;overflow-y:auto;line-height:1.4;">
+              https://accounts.spotify.com/authorize?client_id=a1b2c3…&amp;response_type=code&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8765%2Fauth%2Fcallback&amp;scope=playlist-read-private+streaming…
+            </div>
+            <p style="font-size:11px;color:#b3b3b3;line-height:1.5;margin:4px 0;">
+              Po přihlášení se stránka automaticky zavře. Pak klikni <em>"Ověřit přihlášení"</em>.
+            </p>
+            <div class="btn-primary">✅ Ověřit přihlášení</div>
+            <div style="width:100%;padding:8px;background:transparent;color:#b3b3b3;border:1px solid #282828;border-radius:8px;font-size:13px;cursor:pointer;text-align:center;margin-top:6px;">Zpět</div>
+          </div>
+        </div>
+      </div>
+      <div class="deck-qam-footer">
+        <div class="deck-nav-btn">← Zpět</div>
+        <div class="deck-nav-btn active">✅ Ověřit</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /edge-case row -->
+
+<!-- ── Legend ── -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-swatch" style="background:#121212;border:1px solid #333;"></div> Pozadí #121212</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#1e1e1e;"></div> Surface #1E1E1E</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#282828;"></div> Hover #282828</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#1DB954;"></div> Spotify Green #1DB954</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#e35454;"></div> Chyba #E35454</div>
+  <div class="legend-item"><div class="legend-swatch" style="background:#b3b3b3;"></div> Muted text #B3B3B3</div>
+  <div style="color:#555;font-size:11px;width:100%;text-align:center;margin-top:4px;">
+    Panel width: 390px &nbsp;|&nbsp; Content area: ~540px scrollable &nbsp;|&nbsp; Font: System UI &nbsp;|&nbsp; Optimalizováno pro Steam Deck 1280×800
+  </div>
+</div>
+
+</body>
+</html>
