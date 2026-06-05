@@ -1,0 +1,9 @@
+{
+  "name": "Spotify Launcher Pro",
+  "version": "1.0.0",
+  "author": "chlupiq",
+  "flags": [],
+  "api_version": 6,
+  "description": "Control Spotify directly from Steam Deck's Quick Access Menu. Browse playlists, control playback, and see what's playing.",
+  "tags": ["music", "spotify", "media"]
+}

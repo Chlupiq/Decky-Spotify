@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "spotify-decky-plugin"
+version = "1.0.0"
+requires-python = ">=3.9"
+dependencies = [
+  "aiohttp>=3.9.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
