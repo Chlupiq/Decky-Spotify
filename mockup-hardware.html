@@ -605,6 +605,202 @@ h1 span{color:#555;font-size:13px;font-weight:400;margin-left:10px}
 
 
 <!-- ═══════════════════════════════════════════════════════════
+     HERO: PLAYLISTS SCREEN
+════════════════════════════════════════════════════════════ -->
+<div class="sub">📋 Playlists screen — výběr playlistu, QAM otevřeno</div>
+
+<div class="deck-scene">
+  <div class="deck-glow" style="background:radial-gradient(ellipse,rgba(29,185,84,.06) 0%,transparent 70%);"></div>
+
+  <div class="trg trg-l">LT</div>
+  <div class="trg trg-r">RT</div>
+  <div class="bmp bmp-l">LB</div>
+  <div class="bmp bmp-r">RB</div>
+  <div class="top-keys">
+    <div class="tkey">−</div>
+    <div class="tkey">+</div>
+    <div class="tkey" style="margin-left:4px;width:18px;font-size:7px;">⏻</div>
+  </div>
+
+  <div class="deck-body">
+
+    <div class="sbezel"></div>
+    <div class="screen">
+      <!-- game bg (different color scheme — racing game) -->
+      <div style="position:absolute;inset:0;background:
+        radial-gradient(circle at 30% 70%,rgba(40,15,5,.95) 0%,transparent 50%),
+        radial-gradient(circle at 80% 20%,rgba(60,30,5,.8) 0%,transparent 45%),
+        linear-gradient(150deg,#1a0e06 0%,#241408 45%,#0e1206 100%);"></div>
+      <!-- grid -->
+      <div style="position:absolute;inset:0;
+        background-image:linear-gradient(rgba(255,140,0,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,140,0,.015) 1px,transparent 1px);
+        background-size:22px 22px;"></div>
+      <!-- road perspective lines -->
+      <div style="position:absolute;bottom:0;left:0;right:175px;height:110px;
+        background:linear-gradient(180deg,transparent,rgba(20,12,4,.8));
+        clip-path:polygon(42% 0%,58% 0%,100% 100%,0% 100%);"></div>
+      <div style="position:absolute;bottom:0;left:0;right:175px;height:110px;
+        background:linear-gradient(180deg,transparent 60%,rgba(30,18,6,.9));"></div>
+      <!-- distant city glow -->
+      <div style="position:absolute;bottom:80px;left:0;right:175px;height:40px;
+        background:linear-gradient(180deg,transparent,rgba(255,120,20,.08),transparent);"></div>
+      <!-- horizon -->
+      <div style="position:absolute;bottom:75px;left:0;right:175px;height:2px;
+        background:linear-gradient(90deg,transparent,rgba(255,120,30,.3),transparent);"></div>
+      <!-- HUD (racing) -->
+      <div style="position:absolute;top:10px;left:10px;opacity:.28;font-size:6px;color:#ff8c00;font-family:monospace;font-weight:700;">
+        <div style="font-size:9px;">178 km/h</div>
+        <div style="margin-top:2px;">GEAR 5</div>
+      </div>
+      <div style="position:absolute;top:8px;right:182px;opacity:.25;text-align:right;font-size:6px;color:#ff8c00;font-family:monospace;">
+        <div>LAP 2/3</div>
+        <div style="margin-top:1px;">1:24.8</div>
+      </div>
+      <!-- minimap -->
+      <div style="position:absolute;bottom:12px;left:10px;width:42px;height:42px;border-radius:50%;
+        border:1px solid rgba(255,140,0,.2);background:rgba(15,10,3,.7);opacity:.28;">
+      </div>
+      <!-- dim -->
+      <div class="gdim"></div>
+      <!-- QAM — Playlists tab -->
+      <div class="qam">
+        <div class="qtabs">
+          <div class="qtab">⚡</div>
+          <div class="qtab">💎</div>
+          <div class="qtab">🔋</div>
+          <div class="qtab">🖥</div>
+          <div class="qtab">🎮</div>
+          <div class="qtab on">🧩</div>
+        </div>
+        <div class="qhdr">Decky Plugins</div>
+        <div class="qbody">
+          <!-- app header -->
+          <div class="pah">
+            <span class="pah-logo">🎵</span>
+            <span class="pah-title">Spotify Pro</span>
+            <span class="pah-dot">●</span>
+          </div>
+          <!-- tabs — Playlists active -->
+          <div class="ptabs">
+            <div class="pt on">📋</div>
+            <div class="pt">🎶</div>
+            <div class="pt">⚙️</div>
+          </div>
+          <!-- list header -->
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:9px;font-weight:700;">Playlisty (6)</span>
+            <span style="font-size:11px;color:#555;cursor:pointer;">🔄</span>
+          </div>
+          <!-- playlist rows -->
+          <div style="display:flex;flex-direction:column;gap:3px;overflow:hidden;">
+            <!-- row 1 — highlighted/focused -->
+            <div style="display:flex;align-items:center;gap:5px;background:#282828;border-radius:4px;padding:4px 5px;outline:1px solid rgba(29,185,84,.4);">
+              <div style="width:30px;height:30px;border-radius:3px;flex-shrink:0;overflow:hidden;">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a472a,#1DB954);display:flex;align-items:center;justify-content:center;font-size:14px;">🎸</div>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:8px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Rock Classics</div>
+                <div style="font-size:7px;color:#888;margin-top:1px;">142 skladeb</div>
+              </div>
+              <div style="width:22px;height:22px;background:#1DB954;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#000;flex-shrink:0;">▶</div>
+            </div>
+            <!-- row 2 -->
+            <div style="display:flex;align-items:center;gap:5px;background:#1e1e1e;border-radius:4px;padding:4px 5px;">
+              <div style="width:30px;height:30px;border-radius:3px;flex-shrink:0;overflow:hidden;">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1a6e,#7b2ff7);display:flex;align-items:center;justify-content:center;font-size:14px;">🎧</div>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:8px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Chill Lofi Mix</div>
+                <div style="font-size:7px;color:#888;margin-top:1px;">87 skladeb</div>
+              </div>
+              <div style="width:22px;height:22px;background:#1DB954;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#000;flex-shrink:0;">▶</div>
+            </div>
+            <!-- row 3 -->
+            <div style="display:flex;align-items:center;gap:5px;background:#1e1e1e;border-radius:4px;padding:4px 5px;">
+              <div style="width:30px;height:30px;border-radius:3px;flex-shrink:0;overflow:hidden;">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#6e1a1a,#e84444);display:flex;align-items:center;justify-content:center;font-size:14px;">🔥</div>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:8px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Gaming Hype</div>
+                <div style="font-size:7px;color:#888;margin-top:1px;">56 skladeb</div>
+              </div>
+              <div style="width:22px;height:22px;background:#1DB954;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#000;flex-shrink:0;">▶</div>
+            </div>
+            <!-- row 4 -->
+            <div style="display:flex;align-items:center;gap:5px;background:#1e1e1e;border-radius:4px;padding:4px 5px;">
+              <div style="width:30px;height:30px;border-radius:3px;flex-shrink:0;overflow:hidden;">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a5a6e,#1DB9B9);display:flex;align-items:center;justify-content:center;font-size:14px;">🌊</div>
+              </div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:8px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Deep Focus</div>
+                <div style="font-size:7px;color:#888;margin-top:1px;">201 skladeb</div>
+              </div>
+              <div style="width:22px;height:22px;background:#1DB954;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#000;flex-shrink:0;">▶</div>
+            </div>
+            <!-- row 5 -->
+            <div style="display:flex;align-items:center;gap:5px;background:#1e1e1e;border-radius:4px;padding:4px 5px;">
+              <div style="width:30px;height:30px;border-radius:3px;flex-shrink:0;
+                background:#282828;display:flex;align-items:center;justify-content:center;font-size:14px;color:#555;">♪</div>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:8px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Oblíbené</div>
+                <div style="font-size:7px;color:#888;margin-top:1px;">1 337 skladeb</div>
+              </div>
+              <div style="width:22px;height:22px;background:#1DB954;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;color:#000;flex-shrink:0;">▶</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /screen -->
+
+    <div class="stick sl"></div>
+    <div class="dpad"><div class="dh"></div><div class="dv"></div></div>
+    <div class="stick sr"></div>
+    <div class="abxy">
+      <div class="bbc by">Y</div>
+      <div class="bbc bb">B</div>
+      <div class="bbc bx">X</div>
+      <div class="bbc ba">A</div>
+    </div>
+    <div class="sysb bsteam"></div>
+    <div class="sysb bqam">•••</div>
+    <div class="grip gl4"></div><div class="grip gl5"></div>
+    <div class="grip gr4"></div><div class="grip gr5"></div>
+    <div class="led"></div>
+    <div class="usbc"></div>
+
+  </div><!-- /deck-body -->
+
+  <!-- Callouts -->
+  <div class="co coL" style="top:92px;right:6px">
+    <strong>📋 Záložka Playlisty</strong>
+    Aktivní, zelené ohraničení<br>
+    <small>cache 5 min, 🔄 force refresh</small>
+  </div>
+  <div class="co coL" style="top:175px;right:6px">
+    <strong>🎸 Focusovaný playlist</strong>
+    Zelený highlight = vybraná položka<br>
+    <small>ovládání D-padem ↑↓</small>
+  </div>
+  <div class="co coL" style="top:268px;right:6px">
+    <strong>▶ Tlačítko Přehrát</strong>
+    POST /api/player/play + playlist_id<br>
+    <small>přepne na Player tab po spuštění</small>
+  </div>
+  <div class="co coR" style="top:104px;left:6px">
+    <strong>🏎 Jiná hra na pozadí</strong>
+    QAM funguje v jakémkoli kontextu<br>
+    <small>herní stav není ovlivněn</small>
+  </div>
+  <div class="co coR" style="top:232px;left:6px">
+    <strong>Thumbnail + název + počet</strong>
+    Gradient placeholder bez obrázku<br>
+    <small>nebo skutečný cover z API</small>
+  </div>
+
+</div><!-- /deck-scene playlists -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
      THUMBNAILS: 3 further screens
 ════════════════════════════════════════════════════════════ -->
 <div class="sub">Ostatní obrazovky pluginu</div>
