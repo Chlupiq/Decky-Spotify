@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<title>Spotify Launcher Pro – Steam Deck Complete Mockup</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:radial-gradient(ellipse at 50% 0%,#0c101a 0%,#020205 100%);
+  min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  padding:44px 20px 80px;display:flex;flex-direction:column;align-items:center;gap:56px;color:#ccc;
+}
+h1{font-size:26px;font-weight:900;color:#fff;letter-spacing:-.5px;text-align:center;}
+h1 em{color:#1DB954;font-style:normal;}
+h1 small{display:block;font-size:11px;color:#444;font-weight:400;letter-spacing:3px;text-transform:uppercase;margin-top:6px;}
+.subtitle{font-size:10px;color:#3a3a3a;text-transform:uppercase;letter-spacing:4px;font-weight:700;text-align:center;margin-bottom:-36px;}
+.divider{width:880px;max-width:100%;display:flex;align-items:center;gap:14px;color:#2a2a2a;font-size:10px;text-transform:uppercase;letter-spacing:3px;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:#191919;}
+
+/* ══════ DECK HARDWARE ══════ */
+.deck-scene{position:relative;width:980px;height:444px;display:flex;align-items:center;justify-content:center;}
+.deck-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:720px;height:260px;
+  background:radial-gradient(ellipse,rgba(29,185,84,.055) 0%,transparent 70%);pointer-events:none;}
+
+.trg{position:absolute;top:22px;width:102px;height:33px;
+  background:linear-gradient(175deg,#3a3a4e 0%,#252538 100%);
+  border-radius:10px 10px 5px 5px;
+  box-shadow:0 -5px 14px rgba(0,0,0,.85),inset 0 1px 1px rgba(255,255,255,.07),0 0 0 1px rgba(255,255,255,.025);
+  display:flex;align-items:center;justify-content:center;font-size:8px;color:#555;font-weight:600;letter-spacing:1px;}
+.trg-l{left:50px}.trg-r{right:50px}
+
+.bmp{position:absolute;top:51px;width:80px;height:19px;
+  background:linear-gradient(180deg,#2e2e46,#22223a);border-radius:4px 4px 2px 2px;
+  box-shadow:inset 0 1px rgba(255,255,255,.04);
+  display:flex;align-items:center;justify-content:center;font-size:7px;color:#444;letter-spacing:1px;}
+.bmp-l{left:92px}.bmp-r{right:92px}
+
+.top-keys{position:absolute;top:18px;left:50%;transform:translateX(-50%);display:flex;gap:3px;}
+.tkey{width:26px;height:15px;background:linear-gradient(180deg,#2a2a42,#1e1e30);border-radius:3px;
+  box-shadow:0 2px 6px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.02);
+  display:flex;align-items:center;justify-content:center;font-size:8px;color:#555;}
+
+.deck-body{position:absolute;top:48px;left:22px;width:936px;height:366px;
+  background:linear-gradient(165deg,#2e2e48 0%,#262542 32%,#1f1e36 66%,#191828 100%);
+  border-radius:40px 40px 118px 118px;
+  box-shadow:0 0 0 1.5px #3c3c56,0 2px 0 3px #0d0d1c,
+    0 22px 75px rgba(0,0,0,.98),0 8px 26px rgba(0,0,0,.88),
+    inset 0 1px 2px rgba(255,255,255,.07),inset 0 -5px 14px rgba(0,0,0,.5);}
+.deck-body::after{content:'';position:absolute;top:8px;bottom:8px;left:50%;transform:translateX(-50%);width:1px;background:rgba(255,255,255,.022);}
+
+.tpad{position:absolute;width:60px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.035);background:rgba(0,0,0,.15);top:172px;}
+.tpad-l{left:68px}.tpad-r{right:68px}
+
+.sbezel{position:absolute;top:72px;left:232px;width:472px;height:314px;
+  background:#060610;border-radius:14px;
+  box-shadow:inset 0 0 0 2px #03030a,0 0 0 1.5px #1a1a2e,inset 0 2px 18px rgba(0,0,0,1);}
+
+.screen{position:absolute;top:78px;left:238px;width:460px;height:302px;border-radius:8px;overflow:hidden;}
+
+/* Stick */
+.stick{position:absolute;border-radius:50%;
+  background:radial-gradient(circle at 36% 36%,#3a3a56,#181828);
+  box-shadow:0 5px 13px rgba(0,0,0,.88),inset 0 1px 1px rgba(255,255,255,.08),0 0 0 2px #0c0c1c;}
+.stick::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:40%;height:40%;border-radius:50%;background:radial-gradient(circle at 40% 40%,#282844,#0e0e1c);}
+.sl{width:58px;height:58px;top:102px;left:68px}
+.sr{width:58px;height:58px;top:212px;right:152px}
+
+.dpad{position:absolute;top:202px;left:68px;width:58px;height:58px;}
+.dh,.dv{position:absolute;background:linear-gradient(180deg,#2c2c46,#1e1e32);border-radius:4px;box-shadow:0 2px 7px rgba(0,0,0,.7);}
+.dh{width:58px;height:21px;top:18px;left:0}.dv{width:21px;height:58px;top:0;left:18px}
+.dpad::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:17px;height:17px;border-radius:50%;background:#111122;}
+
+.abxy{position:absolute;top:122px;right:68px;width:64px;height:64px;}
+.bbc{position:absolute;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:7.5px;font-weight:700;box-shadow:0 3px 8px rgba(0,0,0,.65),inset 0 1px rgba(255,255,255,.1);}
+.by{background:#9a9900;color:#000;top:0;left:50%;transform:translateX(-50%)}
+.bb{background:#c22a2a;color:#fff;bottom:0;left:50%;transform:translateX(-50%)}
+.bx{background:#2a5aaa;color:#fff;top:50%;left:0;transform:translateY(-50%)}
+.ba{background:#1e6622;color:#fff;top:50%;right:0;transform:translateY(-50%)}
+
+.sysb{position:absolute;width:17px;height:17px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(180deg,#2e2e48,#1c1c30);box-shadow:0 2px 7px rgba(0,0,0,.65);}
+.bsteam{top:176px;left:196px}
+.bsteam::after{content:'⊙';font-size:8.5px;color:#888;position:absolute;}
+.bqam{top:176px;right:196px;background:radial-gradient(circle,#22a055,#157a3a);color:#000;font-size:7px;font-weight:900;}
+
+.grip{position:absolute;width:29px;height:12px;background:linear-gradient(180deg,#252340,#181828);border-radius:3px;box-shadow:0 2px 5px rgba(0,0,0,.5);}
+.gl4{bottom:85px;left:38px}.gl5{bottom:62px;left:38px}
+.gr4{bottom:85px;right:38px}.gr5{bottom:62px;right:38px}
+
+.led{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);width:124px;height:3px;
+  background:linear-gradient(90deg,transparent,rgba(29,185,84,.5),rgba(29,185,84,.78),rgba(29,185,84,.5),transparent);
+  border-radius:2px;box-shadow:0 0 12px rgba(29,185,84,.38);}
+.usbc{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:14px;height:7px;
+  background:#0b0b1c;border-radius:2px;border:1px solid #1a1a2a;}
+
+/* ══════ GAME BACKGROUNDS ══════ */
+.gbg-scifi{position:absolute;inset:0;
+  background:radial-gradient(circle at 20% 70%,rgba(7,20,56,.97) 0%,transparent 52%),
+    radial-gradient(circle at 76% 22%,rgba(38,7,68,.88) 0%,transparent 48%),
+    linear-gradient(148deg,#080d1c 0%,#100820 52%,#061218 100%);}
+.gbg-racing{position:absolute;inset:0;
+  background:radial-gradient(circle at 25% 72%,rgba(38,14,5,.97) 0%,transparent 52%),
+    radial-gradient(circle at 80% 18%,rgba(58,28,5,.88) 0%,transparent 46%),
+    linear-gradient(156deg,#170d06 0%,#1d1008 52%,#0c1106 100%);}
+.gbg-fantasy{position:absolute;inset:0;
+  background:radial-gradient(circle at 28% 62%,rgba(4,18,38,.98) 0%,transparent 52%),
+    radial-gradient(circle at 72% 28%,rgba(24,8,44,.88) 0%,transparent 46%),
+    linear-gradient(162deg,#070e18 0%,#110820 52%,#070e16 100%);}
+
+.ggrid{position:absolute;inset:0;}
+.ggrid-blue{background-image:linear-gradient(rgba(50,90,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(50,90,255,.015) 1px,transparent 1px);background-size:24px 24px;}
+.ggrid-orange{background-image:linear-gradient(rgba(255,135,20,.013) 1px,transparent 1px),linear-gradient(90deg,rgba(255,135,20,.013) 1px,transparent 1px);background-size:24px 24px;}
+
+.stars{position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,.72) 1px,transparent 1px),
+    radial-gradient(circle,rgba(255,255,255,.5) 1px,transparent 1px),
+    radial-gradient(circle,rgba(255,255,255,.35) 1px,transparent 1px);
+  background-size:74px 58px,116px 84px,59px 74px;background-position:10px 9px,37px 27px,65px 18px;}
+
+.mountains{position:absolute;bottom:52px;left:0;right:174px;height:92px;
+  background:linear-gradient(180deg,transparent,rgba(10,26,65,.55));
+  clip-path:polygon(0 100%,0 62%,6% 44%,12% 58%,20% 28%,28% 52%,36% 16%,44% 42%,52% 30%,60% 52%,68% 20%,76% 46%,84% 26%,92% 48%,100% 36%,100% 100%);}
+.mountains2{position:absolute;bottom:0;left:0;right:174px;height:62px;
+  background:linear-gradient(180deg,rgba(9,18,40,.78),rgba(4,9,20,.97));
+  clip-path:polygon(0 100%,0 50%,8% 30%,18% 56%,30% 22%,42% 52%,54% 16%,64% 46%,76% 28%,88% 54%,100% 34%,100% 100%);}
+
+.road{position:absolute;bottom:0;left:0;right:174px;height:115px;
+  background:linear-gradient(180deg,transparent,rgba(18,12,4,.88));
+  clip-path:polygon(39% 0%,61% 0%,100% 100%,0% 100%);}
+.road-lines{position:absolute;bottom:0;left:0;right:174px;height:115px;overflow:hidden;}
+.road-lines::before,.road-lines::after{content:'';position:absolute;bottom:0;width:2px;background:rgba(255,220,80,.2);border-radius:1px;}
+.road-lines::before{left:48%;height:60%}.road-lines::after{left:52%;height:60%}
+
+.hud-scifi{position:absolute;bottom:16px;left:10px;opacity:.24;}
+.hlbl{font-size:6px;color:#9aa;margin-bottom:1px;}
+.hbar{height:4px;border-radius:2px;margin-bottom:3px;}
+.hhp{background:linear-gradient(90deg,#3db33d,#1a8a1a);width:66px;}
+.hmp{background:linear-gradient(90deg,#3333cc,#2222aa);width:44px;}
+
+.hud-racing{position:absolute;top:8px;left:9px;opacity:.3;font-family:monospace;font-weight:700;font-size:7px;color:#ff8c00;}
+.minimap{position:absolute;top:8px;left:8px;width:46px;height:46px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.1);background:rgba(0,12,30,.65);opacity:.26;}
+
+.gdim{position:absolute;inset:0;right:173px;background:rgba(0,0,0,.52);}
+
+/* ══════ QAM PANEL ══════ */
+.qam{position:absolute;top:0;right:0;width:174px;height:100%;background:#13131d;border-left:1px solid #1c1c2c;display:flex;flex-direction:column;overflow:hidden;}
+.qtabs{display:flex;background:#0b0b13;border-bottom:1px solid #191928;padding:5px 4px 4px;gap:2px;flex-shrink:0;}
+.qtab{flex:1;height:22px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#38385a;}
+.qtab.on{background:#1DB954;color:#000;font-weight:800;}
+.qhdr{padding:4px 8px 3px;font-size:7.5px;color:#42425a;text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid #191928;flex-shrink:0;}
+.qbody{flex:1;overflow:hidden;background:#111118;padding:7px;display:flex;flex-direction:column;font-size:9px;color:#fff;}
+
+/* plugin header */
+.pah{display:flex;align-items:center;gap:5px;padding-bottom:7px;border-bottom:1px solid #1d1d1d;margin-bottom:7px;flex-shrink:0;}
+.pah-logo{font-size:13px}.pah-title{flex:1;font-size:10px;font-weight:700;color:#1DB954}.pah-dot{color:#1DB954;font-size:7px}
+
+/* plugin tabs */
+.ptabs{display:flex;gap:2px;margin-bottom:8px;flex-shrink:0;}
+.pt{flex:1;padding:4px 2px;background:#1e1e1e;border-radius:4px;text-align:center;font-size:7.5px;color:#666;border:1px solid transparent;}
+.pt.on{background:#182218;color:#1DB954;font-weight:700;border-color:rgba(29,185,84,.3);}
+
+/* ── Now Playing card ── */
+.art-card{background:#1c1c1c;border-radius:7px;padding:7px;display:flex;gap:7px;margin-bottom:8px;flex-shrink:0;}
+.art-box{width:46px;height:46px;border-radius:5px;flex-shrink:0;position:relative;overflow:hidden;}
+.art-img{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:22px;}
+.art-badge{position:absolute;bottom:1px;right:1px;width:13px;height:13px;background:#1DB954;color:#000;border-radius:50%;font-size:5.5px;display:flex;align-items:center;justify-content:center;font-weight:900;}
+.track-info{flex:1;min-width:0;}
+.t-name{font-size:9.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.t-artist{font-size:8px;color:#1DB954;margin-top:1px;}
+.t-album{font-size:7px;color:#666;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.t-prog{display:flex;align-items:center;gap:4px;margin-top:5px;}
+.t-time{font-size:7px;color:#666;flex-shrink:0;}
+.progbar{flex:1;height:2.5px;background:#2a2a2a;border-radius:2px;overflow:hidden;}
+.progfill{height:100%;background:#1DB954;}
+
+/* controls */
+.ctrl-row{display:flex;justify-content:center;align-items:center;gap:6px;margin-bottom:7px;flex-shrink:0;}
+.cb{width:27px;height:27px;background:#1c1c1c;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:#aaa;}
+.cb.main{width:35px;height:35px;background:#1DB954;color:#000;font-size:15px;}
+.cb.mode{background:transparent;font-size:12px;}
+.cb.mode-on{color:#1DB954}.cb.mode-off{color:#444}
+
+/* volume */
+.vol-row{display:flex;align-items:center;gap:4px;font-size:9px;color:#666;margin-bottom:7px;flex-shrink:0;}
+.vol-track{flex:1;height:3px;background:#242424;border-radius:2px;position:relative;}
+.vol-fill{height:100%;background:#1DB954;border-radius:2px;width:68%;}
+.vol-knob{position:absolute;top:50%;right:calc(32% - 4px);transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.5);}
+
+/* device badge */
+.dev-badge{display:flex;align-items:center;justify-content:center;gap:4px;background:#1c1c1c;border:1px solid rgba(29,185,84,.28);border-radius:10px;padding:3px 8px;font-size:7.5px;color:#1DB954;cursor:pointer;flex-shrink:0;}
+
+/* ── Playlists ── */
+.pl-search{display:flex;align-items:center;background:#191919;border:1px solid #272727;border-radius:5px;padding:4px 6px;gap:4px;margin-bottom:7px;flex-shrink:0;}
+.pl-si{font-size:9px;color:#555}.pl-st{font-size:8px;color:#777;flex:1}.pl-sx{font-size:9px;color:#333}
+.pl-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-shrink:0;}
+.pl-rows{display:flex;flex-direction:column;gap:2px;flex:1;overflow:hidden;}
+.pl-row{display:flex;align-items:center;gap:5px;padding:4px 5px;border-radius:4px;border-left:2px solid transparent;cursor:pointer;}
+.pl-row.focused{background:#252525;border-left-color:#1DB954;}
+.pl-art{width:30px;height:30px;border-radius:3px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.pl-info{flex:1;min-width:0;}
+.pl-name{font-size:8.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pl-meta{font-size:7px;color:#555;margin-top:1px;}
+.pl-play{font-size:10px;color:#333;flex-shrink:0;}
+.pl-row.focused .pl-play{color:#1DB954;}
+
+/* ── TrackList ── */
+.tl-hdr{display:flex;align-items:center;gap:5px;padding-bottom:6px;border-bottom:1px solid #1c1c1c;margin-bottom:5px;flex-shrink:0;}
+.tl-back{font-size:9px;color:#1DB954;font-weight:700;cursor:pointer;}
+.tl-title{font-size:9px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tl-rows{display:flex;flex-direction:column;flex:1;overflow:hidden;}
+.tl-row{display:flex;align-items:center;gap:6px;padding:5px 5px;border-bottom:1px solid #191919;border-left:2px solid transparent;cursor:pointer;}
+.tl-row.focused{background:#202020;border-left-color:#1DB954;}
+.tl-num{width:12px;font-size:8px;color:#555;text-align:right;flex-shrink:0;}
+.tl-body{flex:1;min-width:0;}
+.tl-name{font-size:8.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tl-artist{font-size:7.5px;color:#1DB954;margin-top:1px;}
+.tl-dur{font-size:7.5px;color:#555;flex-shrink:0;}
+
+/* ── MiniPlayer bar ── */
+.mini{position:absolute;bottom:0;left:0;right:0;height:38px;background:#0d0d17;border-top:1px solid #1c1c28;
+  display:flex;align-items:center;padding:0 8px;gap:5px;}
+.mini-art{width:24px;height:24px;border-radius:3px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.mini-info{flex:1;min-width:0;}
+.mini-track{font-size:8px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.mini-artist{font-size:7px;color:#1DB954;}
+.mini-btns{display:flex;align-items:center;gap:4px;flex-shrink:0;}
+.mini-btn{font-size:10px;color:#888;}.mini-btn.play{color:#1DB954;font-size:14px;}
+
+/* ── Toast ── */
+.toast{position:absolute;top:30px;left:7px;right:7px;background:#18182a;border:1px solid rgba(29,185,84,.28);
+  border-radius:6px;padding:6px 7px;display:flex;align-items:center;gap:6px;z-index:10;}
+@keyframes toast-in{from{opacity:0;transform:translateY(-8px) scale(.96)}to{opacity:1;transform:none}}
+.toast-art{width:28px;height:28px;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.toast-text{flex:1;min-width:0;}
+.toast-title{font-size:8.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.toast-sub{font-size:7px;color:#1DB954;}
+.toast-bar{position:absolute;bottom:0;left:0;height:2px;width:55%;background:#1DB954;border-radius:0 0 0 6px;}
+
+/* ── Device Dropdown ── */
+.dev-list{position:absolute;bottom:52px;left:7px;right:7px;background:#191926;
+  border:1px solid rgba(29,185,84,.22);border-radius:7px;overflow:hidden;z-index:5;}
+.dev-row{display:flex;align-items:center;gap:6px;padding:6px 8px;font-size:8px;border-bottom:1px solid #1e1e1e;cursor:pointer;}
+.dev-row:last-child{border-bottom:none;}
+.dev-row.active{background:#182218;color:#1DB954;}
+.dev-icon{font-size:12px;flex-shrink:0;}
+.dev-info{flex:1;min-width:0;}
+.dev-name{font-weight:700;}
+.dev-vol{font-size:7px;color:#666;margin-top:1px;}
+.dev-check{color:#1DB954;font-size:10px;}
+
+/* ── Login ── */
+.login-body{flex:1;display:flex;flex-direction:column;gap:7px;}
+.login-head{display:flex;align-items:center;gap:6px;margin-bottom:2px;}
+.login-info{background:rgba(29,185,84,.07);border:1px solid rgba(29,185,84,.18);border-radius:4px;padding:5px 6px;font-size:7px;color:#888;line-height:1.5;}
+.login-info b{color:#1DB954;}
+.inp-lbl{font-size:7.5px;color:#888;margin-bottom:2px;}
+.inp-box{background:#1c1c1c;border:1px solid #2c2c2c;border-radius:4px;padding:5px 7px;font-size:7.5px;color:#aaa;font-family:monospace;}
+.inp-hint{font-size:7px;color:#444;margin-top:2px;}
+.btn-green{background:#1DB954;border-radius:4px;padding:7px;text-align:center;font-size:9px;font-weight:700;color:#000;margin-top:4px;}
+
+/* ── Settings ── */
+.set-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid #1c1c1c;font-size:8.5px;}
+.set-badge{font-size:7px;padding:2px 6px;border-radius:10px;background:rgba(29,185,84,.12);color:#1DB954;border:1px solid rgba(29,185,84,.28);}
+.set-dim{font-size:7.5px;color:#555;}
+.btn-danger{background:rgba(231,76,60,.12);color:#e74c3c;border:1px solid rgba(231,76,60,.3);border-radius:4px;padding:7px;text-align:center;font-size:9px;font-weight:700;margin-top:8px;}
+
+/* ── Callouts ── */
+.co{position:absolute;background:rgba(5,5,14,.97);border:1px solid rgba(29,185,84,.28);color:#bbb;font-size:10px;padding:6px 10px;border-radius:6px;white-space:nowrap;line-height:1.55;pointer-events:none;}
+.co strong{color:#1DB954;display:block;font-size:11px;margin-bottom:2px;}
+.co small{color:#555;font-size:9px;}
+.coL::before,.coR::before{content:'';position:absolute;top:50%;width:14px;height:1px;background:rgba(29,185,84,.38);}
+.coL::before{right:-14px;transform:translateY(-50%)}
+.coR::before{left:-14px;transform:translateY(-50%)}
+
+/* ── Small-card gallery ── */
+.gallery{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;}
+.sm-card{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.sm-label{font-size:10px;color:#555;text-transform:uppercase;letter-spacing:2px;font-weight:600;text-align:center;}
+.sm-qam{width:174px;height:310px;background:#13131d;border-radius:8px;border:1px solid #1a1a28;display:flex;flex-direction:column;overflow:hidden;position:relative;}
+
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.38}}
+.skel{background:#262626;border-radius:2px;animation:pulse 1.4s ease-in-out infinite;}
+</style>
+</head>
+<body>
+
+<h1><em>Spotify Launcher Pro</em><small>Steam Deck · Complete UI Mockup</small></h1>
+
+<!-- ════════════════════════════════════════
+     HERO 1 — PLAYER SCREEN
+════════════════════════════════════════ -->
+<div class="subtitle">🎶 Přehrávač — Blinding Lights hraje, QAM otevřeno</div>
+
+<div class="deck-scene">
+  <div class="deck-glow"></div>
+  <div class="trg trg-l">LT</div><div class="trg trg-r">RT</div>
+  <div class="bmp bmp-l">LB</div><div class="bmp bmp-r">RB</div>
+  <div class="top-keys"><div class="tkey">−</div><div class="tkey">+</div><div class="tkey" style="margin-left:4px;width:19px;font-size:7px">⏻</div></div>
+
+  <div class="deck-body">
+    <!-- Screen -->
+    <div class="sbezel"></div>
+    <div class="screen">
+      <div class="gbg-scifi"></div>
+      <div class="ggrid ggrid-blue"></div>
+      <div class="stars"></div>
+      <div class="mountains"></div><div class="mountains2"></div>
+      <div class="hud-scifi">
+        <div class="hlbl">HP</div><div class="hbar hhp"></div>
+        <div class="hlbl">MP</div><div class="hbar hmp"></div>
+      </div>
+      <div class="minimap"></div>
+      <div class="gdim"></div>
+
+      <!-- QAM — Player tab -->
+      <div class="qam">
+        <div class="qtabs">
+          <div class="qtab">⚡</div><div class="qtab">💎</div><div class="qtab">🔋</div>
+          <div class="qtab">🖥</div><div class="qtab">🎮</div><div class="qtab on">🧩</div>
+        </div>
+        <div class="qhdr">Decky Plugins</div>
+        <div class="qbody">
+          <div class="pah">
+            <span class="pah-logo">🎵</span>
+            <span class="pah-title">Spotify Pro</span>
+            <span class="pah-dot">●</span>
+          </div>
+          <div class="ptabs">
+            <div class="pt">📋 Playlisty</div>
+            <div class="pt on">🎶 Hráč</div>
+            <div class="pt">⚙️</div>
+          </div>
+
+          <!-- Album art + track info -->
+          <div class="art-card">
+            <div class="art-box">
+              <div class="art-img" style="background:linear-gradient(135deg,#1a1040,#8b2fc9);">🎤</div>
+              <div class="art-badge">▶</div>
+            </div>
+            <div class="track-info">
+              <div class="t-name">Blinding Lights</div>
+              <div class="t-artist">The Weeknd</div>
+              <div class="t-album">After Hours</div>
+              <div class="t-prog">
+                <span class="t-time">2:15</span>
+                <div class="progbar"><div class="progfill" style="width:64%"></div></div>
+                <span class="t-time">3:20</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls: shuffle | prev | play | next | repeat -->
+          <div class="ctrl-row">
+            <div class="cb mode cb mode-on" title="Shuffle zapnuto">⇌</div>
+            <div class="cb">⏮</div>
+            <div class="cb main">⏸</div>
+            <div class="cb">⏭</div>
+            <div class="cb mode cb mode-off" title="Repeat vypnuto">↻</div>
+          </div>
+
+          <!-- Volume -->
+          <div class="vol-row">
+            <span>🔈</span>
+            <div class="vol-track">
+              <div class="vol-fill"></div>
+              <div class="vol-knob"></div>
+            </div>
+            <span>🔊</span>
+          </div>
+
+          <!-- Device badge -->
+          <div class="dev-badge">💻 Steam Deck ▾</div>
+        </div>
+      </div>
+    </div><!-- /screen -->
+
+    <!-- Controls -->
+    <div class="stick sl"></div>
+    <div class="dpad"><div class="dh"></div><div class="dv"></div></div>
+    <div class="stick sr"></div>
+    <div class="abxy">
+      <div class="bbc by">Y</div><div class="bbc bb">B</div>
+      <div class="bbc bx">X</div><div class="bbc ba">A</div>
+    </div>
+    <div class="sysb bsteam"></div>
+    <div class="sysb bqam">•••</div>
+    <div class="tpad tpad-l"></div><div class="tpad tpad-r"></div>
+    <div class="grip gl4"></div><div class="grip gl5"></div>
+    <div class="grip gr4"></div><div class="grip gr5"></div>
+    <div class="led"></div><div class="usbc"></div>
+  </div>
+
+  <!-- Callouts -->
+  <div class="co coL" style="top:84px;right:4px">
+    <strong>🧩 Decky Loader QAM</strong>
+    Záložka pluginů (zelená ikon 🧩)<br>
+    <small>otevřít: tlačítko ••• na Steam Decku</small>
+  </div>
+  <div class="co coL" style="top:166px;right:4px">
+    <strong>🎵 Now Playing</strong>
+    Album art · název · umělec · album<br>
+    <small>progress bar interpolován každých 500 ms</small>
+  </div>
+  <div class="co coL" style="top:244px;right:4px">
+    <strong>⇌ Shuffle · ↻ Repeat · Volume</strong>
+    Shuffle zelená = zapnuto; Repeat cykluje<br>
+    <small>off → context → track → off</small>
+  </div>
+  <div class="co coR" style="top:88px;left:4px">
+    <strong>🚀 Sci-fi hra na pozadí</strong>
+    QAM se překrývá přes hru<br>
+    <small>hra pauzována / v Game Mode</small>
+  </div>
+  <div class="co coR" style="top:236px;left:4px">
+    <strong>💻 Device badge</strong>
+    Klik → výběr Spotify zařízení<br>
+    <small>přenos přehrávání přes Web API</small>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     HERO 2 — PLAYLISTS SCREEN
+════════════════════════════════════════ -->
+<div class="subtitle">📋 Playlisty — výběr playlistu D-padem, MiniPlayer dole</div>
+
+<div class="deck-scene">
+  <div class="deck-glow"></div>
+  <div class="trg trg-l">LT</div><div class="trg trg-r">RT</div>
+  <div class="bmp bmp-l">LB</div><div class="bmp bmp-r">RB</div>
+  <div class="top-keys"><div class="tkey">−</div><div class="tkey">+</div><div class="tkey" style="margin-left:4px;width:19px;font-size:7px">⏻</div></div>
+
+  <div class="deck-body">
+    <div class="sbezel"></div>
+    <div class="screen">
+      <div class="gbg-racing"></div>
+      <div class="ggrid ggrid-orange"></div>
+      <div class="road"></div><div class="road-lines"></div>
+      <div style="position:absolute;bottom:80px;left:0;right:174px;height:2px;background:linear-gradient(90deg,transparent,rgba(255,120,30,.25),transparent);"></div>
+      <div class="hud-racing">
+        <div style="font-size:10px;margin-bottom:1px;">182 km/h</div>
+        <div>GEAR 5</div>
+      </div>
+      <div style="position:absolute;top:8px;right:182px;font-family:monospace;font-size:6px;color:#ff8c00;opacity:.28;text-align:right;">
+        <div>LAP 2/3</div><div style="margin-top:1px;">1:26.4</div>
+      </div>
+      <div class="minimap" style="top:auto;bottom:12px;"></div>
+      <div class="gdim"></div>
+
+      <!-- QAM — Playlists tab -->
+      <div class="qam">
+        <div class="qtabs">
+          <div class="qtab">⚡</div><div class="qtab">💎</div><div class="qtab">🔋</div>
+          <div class="qtab">🖥</div><div class="qtab">🎮</div><div class="qtab on">🧩</div>
+        </div>
+        <div class="qhdr">Decky Plugins</div>
+        <div class="qbody" style="padding-bottom:0;">
+          <div class="pah">
+            <span class="pah-logo">🎵</span>
+            <span class="pah-title">Spotify Pro</span>
+            <span class="pah-dot">●</span>
+          </div>
+          <div class="ptabs">
+            <div class="pt on">📋 Playlisty</div>
+            <div class="pt">🎶</div>
+            <div class="pt">⚙️</div>
+          </div>
+
+          <!-- Search bar -->
+          <div class="pl-search">
+            <span class="pl-si">🔍</span>
+            <span class="pl-st">Hledat playlist…</span>
+          </div>
+
+          <!-- Header -->
+          <div class="pl-hdr">
+            <span style="font-size:8.5px;font-weight:700;">Playlisty (7)</span>
+            <span style="font-size:11px;color:#444;">🔄</span>
+          </div>
+
+          <!-- Playlist rows (5 visible, 2nd focused) -->
+          <div class="pl-rows">
+            <div class="pl-row">
+              <div class="pl-art" style="background:linear-gradient(135deg,#1a3a6a,#1a6ad4);">🎧</div>
+              <div class="pl-info"><div class="pl-name">Morning Drive</div><div class="pl-meta">34 skladeb</div></div>
+              <span class="pl-play">▶</span>
+            </div>
+            <div class="pl-row focused">
+              <div class="pl-art" style="background:linear-gradient(135deg,#1a472a,#1DB954);">🎸</div>
+              <div class="pl-info"><div class="pl-name">Rock Classics</div><div class="pl-meta">48 skladeb</div></div>
+              <span class="pl-play">▶</span>
+            </div>
+            <div class="pl-row">
+              <div class="pl-art" style="background:linear-gradient(135deg,#6a1a3a,#d41a6a);">🎵</div>
+              <div class="pl-info"><div class="pl-name">Chill Vibes</div><div class="pl-meta">22 skladeb</div></div>
+              <span class="pl-play">▶</span>
+            </div>
+            <div class="pl-row">
+              <div class="pl-art" style="background:linear-gradient(135deg,#3a1a6a,#8b2fc9);">🎤</div>
+              <div class="pl-info"><div class="pl-name">Pop Hits 2024</div><div class="pl-meta">61 skladeb</div></div>
+              <span class="pl-play">▶</span>
+            </div>
+            <div class="pl-row">
+              <div class="pl-art" style="background:linear-gradient(135deg,#1a3a3a,#1aadad);">🎹</div>
+              <div class="pl-info"><div class="pl-name">Late Night Jazz</div><div class="pl-meta">19 skladeb</div></div>
+              <span class="pl-play">▶</span>
+            </div>
+          </div>
+
+          <!-- MiniPlayer bar -->
+          <div class="mini">
+            <div class="mini-art" style="background:linear-gradient(135deg,#1a1040,#8b2fc9);">🎤</div>
+            <div class="mini-info">
+              <div class="mini-track">Blinding Lights</div>
+              <div class="mini-artist">The Weeknd</div>
+            </div>
+            <div class="mini-btns">
+              <span class="mini-btn">⏮</span>
+              <span class="mini-btn play">⏸</span>
+              <span class="mini-btn">⏭</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stick sl"></div>
+    <div class="dpad"><div class="dh"></div><div class="dv"></div></div>
+    <div class="stick sr"></div>
+    <div class="abxy">
+      <div class="bbc by">Y</div><div class="bbc bb">B</div>
+      <div class="bbc bx">X</div><div class="bbc ba">A</div>
+    </div>
+    <div class="sysb bsteam"></div>
+    <div class="sysb bqam">•••</div>
+    <div class="tpad tpad-l"></div><div class="tpad tpad-r"></div>
+    <div class="grip gl4"></div><div class="grip gl5"></div>
+    <div class="grip gr4"></div><div class="grip gr5"></div>
+    <div class="led"></div><div class="usbc"></div>
+  </div>
+
+  <!-- Callouts -->
+  <div class="co coL" style="top:82px;right:4px">
+    <strong>🔍 Vyhledávání playlistů</strong>
+    Filtruje seznam v reálném čase<br>
+    <small>✕ = vymaže filtr</small>
+  </div>
+  <div class="co coL" style="top:168px;right:4px">
+    <strong>⬆⬇ D-pad navigace</strong>
+    2. playlist zvýrazněn (zelený okraj)<br>
+    <small>Enter / A = přehrát · Enter = browse</small>
+  </div>
+  <div class="co coL" style="top:264px;right:4px">
+    <strong>🎵 MiniPlayer</strong>
+    Viditelný na Playlisty + Nastavení<br>
+    <small>skrytý pouze na záložce Přehrávač</small>
+  </div>
+  <div class="co coR" style="top:108px;left:4px">
+    <strong>🏎️ Závodní hra na pozadí</strong>
+    Steam Deck v Game Mode<br>
+    <small>overlay se překryje přes hru</small>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     HERO 3 — TRACK LIST
+════════════════════════════════════════ -->
+<div class="subtitle">🎼 TrackList — procházení skladeb playlistu D-padem</div>
+
+<div class="deck-scene">
+  <div class="deck-glow"></div>
+  <div class="trg trg-l">LT</div><div class="trg trg-r">RT</div>
+  <div class="bmp bmp-l">LB</div><div class="bmp bmp-r">RB</div>
+  <div class="top-keys"><div class="tkey">−</div><div class="tkey">+</div><div class="tkey" style="margin-left:4px;width:19px;font-size:7px">⏻</div></div>
+
+  <div class="deck-body">
+    <div class="sbezel"></div>
+    <div class="screen">
+      <div class="gbg-fantasy"></div>
+      <div class="ggrid ggrid-blue"></div>
+      <div class="stars"></div>
+      <div class="mountains" style="right:174px;background:linear-gradient(180deg,transparent,rgba(8,20,55,.5));"></div>
+      <div class="mountains2" style="right:174px;background:linear-gradient(180deg,rgba(7,15,38,.78),rgba(3,7,18,.97));"></div>
+      <div style="position:absolute;top:8px;left:8px;width:46px;height:46px;border-radius:50%;border:1px solid rgba(100,150,255,.1);background:rgba(0,8,30,.65);opacity:.26;"></div>
+      <div class="gdim"></div>
+
+      <!-- QAM — TrackList -->
+      <div class="qam">
+        <div class="qtabs">
+          <div class="qtab">⚡</div><div class="qtab">💎</div><div class="qtab">🔋</div>
+          <div class="qtab">🖥</div><div class="qtab">🎮</div><div class="qtab on">🧩</div>
+        </div>
+        <div class="qhdr">Decky Plugins</div>
+        <div class="qbody" style="padding-bottom:0;">
+          <div class="pah">
+            <span class="pah-logo">🎵</span>
+            <span class="pah-title">Spotify Pro</span>
+            <span class="pah-dot">●</span>
+          </div>
+
+          <!-- TrackList header (back button) -->
+          <div class="tl-hdr">
+            <span class="tl-back">← Rock Classics</span>
+          </div>
+
+          <!-- Track rows -->
+          <div class="tl-rows">
+            <div class="tl-row">
+              <div class="tl-num">1</div>
+              <div class="tl-body"><div class="tl-name">Highway to Hell</div><div class="tl-artist">AC/DC</div></div>
+              <div class="tl-dur">3:28</div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-num">2</div>
+              <div class="tl-body"><div class="tl-name">Back in Black</div><div class="tl-artist">AC/DC</div></div>
+              <div class="tl-dur">4:15</div>
+            </div>
+            <div class="tl-row focused">
+              <div class="tl-num">3</div>
+              <div class="tl-body"><div class="tl-name">Bohemian Rhapsody</div><div class="tl-artist">Queen</div></div>
+              <div class="tl-dur">5:54</div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-num">4</div>
+              <div class="tl-body"><div class="tl-name">Stairway to Heaven</div><div class="tl-artist">Led Zeppelin</div></div>
+              <div class="tl-dur">8:02</div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-num">5</div>
+              <div class="tl-body"><div class="tl-name">Smells Like Teen Spirit</div><div class="tl-artist">Nirvana</div></div>
+              <div class="tl-dur">5:01</div>
+            </div>
+            <div class="tl-row">
+              <div class="tl-num">6</div>
+              <div class="tl-body"><div class="tl-name">Sweet Child O' Mine</div><div class="tl-artist">Guns N' Roses</div></div>
+              <div class="tl-dur">5:55</div>
+            </div>
+          </div>
+
+          <!-- MiniPlayer -->
+          <div class="mini">
+            <div class="mini-art" style="background:linear-gradient(135deg,#1a1040,#8b2fc9);">🎤</div>
+            <div class="mini-info">
+              <div class="mini-track">Blinding Lights</div>
+              <div class="mini-artist">The Weeknd</div>
+            </div>
+            <div class="mini-btns">
+              <span class="mini-btn">⏮</span>
+              <span class="mini-btn play">⏸</span>
+              <span class="mini-btn">⏭</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stick sl"></div>
+    <div class="dpad"><div class="dh"></div><div class="dv"></div></div>
+    <div class="stick sr"></div>
+    <div class="abxy">
+      <div class="bbc by">Y</div><div class="bbc bb">B</div>
+      <div class="bbc bx">X</div><div class="bbc ba">A</div>
+    </div>
+    <div class="sysb bsteam"></div>
+    <div class="sysb bqam">•••</div>
+    <div class="tpad tpad-l"></div><div class="tpad tpad-r"></div>
+    <div class="grip gl4"></div><div class="grip gl5"></div>
+    <div class="grip gr4"></div><div class="grip gr5"></div>
+    <div class="led"></div><div class="usbc"></div>
+  </div>
+
+  <!-- Callouts -->
+  <div class="co coL" style="top:84px;right:4px">
+    <strong>← Rock Classics</strong>
+    Tlačítko zpět na playlist<br>
+    <small>klik B / klik ← tlačítko</small>
+  </div>
+  <div class="co coL" style="top:178px;right:4px">
+    <strong>🎼 Skladba #3 vybrána</strong>
+    D-pad ↑↓ navigace, zelený okraj<br>
+    <small>Enter / A = přehrát od tohoto místa</small>
+  </div>
+  <div class="co coL" style="top:265px;right:4px">
+    <strong>🎵 MiniPlayer stále viditelný</strong>
+    Aktuálně hrající nezávisle<br>
+    <small>přehrávání pokračuje při procházení</small>
+  </div>
+  <div class="co coR" style="top:108px;left:4px">
+    <strong>⚔️ Fantasy hra na pozadí</strong>
+    Třetí varianta herního pozadí<br>
+    <small>plugin funguje s jakoukoliv hrou</small>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SMALL SCREENS GALLERY
+════════════════════════════════════════ -->
+<div class="divider">Detailní pohledy</div>
+
+<div class="gallery">
+
+  <!-- Login -->
+  <div class="sm-card">
+    <div class="sm-label">🔐 Přihlášení</div>
+    <div class="sm-qam">
+      <div class="qtabs" style="padding:5px 4px 4px;">
+        <div class="qtab">⚡</div><div class="qtab">💎</div><div class="qtab">🔋</div>
+        <div class="qtab">🖥</div><div class="qtab">🎮</div><div class="qtab on">🧩</div>
+      </div>
+      <div class="qhdr">Decky Plugins</div>
+      <div class="qbody">
+        <div class="login-head">
+          <span style="font-size:20px;">🎵</span>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#1DB954;">Spotify Launcher Pro</div>
+            <div style="font-size:7px;color:#555;">Steam Deck Plugin</div>
+          </div>
+        </div>
+        <div class="login-info">
+          <b>Client Secret není potřeba.</b><br>
+          Používáme <b>PKCE OAuth 2.0</b> — stačí pouze Client ID z Spotify Developer Dashboard.
+        </div>
+        <div class="login-body">
+          <div>
+            <div class="inp-lbl">Client ID</div>
+            <div class="inp-box">a1b2c3d4e5f6789012345678901234ab</div>
+            <div class="inp-hint">32-znakový hex kód z developer.spotify.com</div>
+          </div>
+          <div class="btn-green">🎵 Přihlásit se přes Spotify</div>
+          <div style="font-size:7px;color:#444;text-align:center;margin-top:2px;">Otevře prohlížeč se Spotify OAuth</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings -->
+  <div class="sm-card">
+    <div class="sm-label">⚙️ Nastavení</div>
+    <div class="sm-qam">
+      <div class="qtabs" style="padding:5px 4px 4px;">
+        <div class="qtab">⚡</div><div class="qtab">💎</div><div class="qtab">🔋</div>
+        <div class="qtab">🖥</div><div class="qtab">🎮</div><div class="qtab on">🧩</div>
+      </div>
+      <div class="qhdr">Decky Plugins</div>
+      <div class="qbody">
+        <div class="pah">
+          <span class="pah-logo">🎵</span>
+          <span class="pah-title">Spotify Pro</span>
+          <span class="pah-dot">●</span>
+        </div>
+        <div class="ptabs">
+          <div class="pt">📋</div>
+          <div class="pt">🎶</div>
+          <div class="pt on">⚙️ Nastavení</div>
+        </div>
+        <div style="font-size:9px;font-weight:700;margin-bottom:6px;">Nastavení</div>
+        <div class="set-row"><span>Stav</span><span class="set-badge">Připojeno ✅</span></div>
+        <div class="set-row"><span>Auth</span><span class="set-dim">PKCE (bez Secret)</span></div>
+        <div class="set-row"><span>Backend</span><span class="set-dim">localhost:8765</span></div>
+        <div class="set-row"><span>Verze</span><span class="set-dim">1.0.0</span></div>
+        <div style="font-size:7px;color:#444;margin-top:6px;line-height:1.5;">Pro změnu Client ID se odhlaste a přihlaste znovu.</div>
+        <div class="btn-danger" style="margin-top:auto;">🚪 Odhlásit se</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="sm-card">
+    <div class="sm-label">🔔 Toast — nová skladba</div>
+    <div class="sm-qam">
+      <div class="qtabs" style="padding:5px 4px 4px;">
+        <div class="qtab">⚡</div><div class="qtab">💎</div><div class="qtab">🔋</div>
+        <div class="qtab">🖥</div><div class="qtab">🎮</div><div class="qtab on">🧩</div>
+      </div>
+      <div class="qhdr">Decky Plugins</div>
+      <div class="qbody" style="position:relative;">
+        <!-- Toast overlay -->
+        <div class="toast" style="animation:toast-in .3s cubic-bezier(.175,.885,.32,1.275);">
+          <div class="toast-art" style="background:linear-gradient(135deg,#1a472a,#1DB954);">🎸</div>
+          <div class="toast-text">
+            <div class="toast-title">Highway to Hell</div>
+            <div class="toast-sub">AC/DC</div>
+          </div>
+          <div class="toast-bar"></div>
+        </div>
+
+        <!-- Dimmed playlist content below -->
+        <div style="opacity:.35;margin-top:48px;">
+          <div class="pah">
+            <span class="pah-logo">🎵</span><span class="pah-title">Spotify Pro</span><span class="pah-dot">●</span>
+          </div>
+          <div class="ptabs">
+            <div class="pt on">📋</div><div class="pt">🎶</div><div class="pt">⚙️</div>
+          </div>
+          <div class="pl-rows" style="gap:3px;">
+            <div class="pl-row" style="padding:4px 5px;">
+              <div class="pl-art" style="background:linear-gradient(135deg,#1a3a6a,#1a6ad4);">🎧</div>
+              <div class="pl-info"><div class="pl-name">Morning Drive</div></div>
+            </div>
+            <div class="pl-row focused" style="padding:4px 5px;">
+              <div class="pl-art" style="background:linear-gradient(135deg,#1a472a,#1DB954);">🎸</div>
+              <div class="pl-info"><div class="pl-name">Rock Classics</div></div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:7px;color:#555;text-align:center;margin-top:10px;line-height:1.6;">
+          Toast se zobrazí při změně skladby<br>
+          Auto-dismiss za 3.5 s<br>
+          Progress bar ubývá v reálném čase
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Device selector -->
+  <div class="sm-card">
+    <div class="sm-label">📱 Výběr zařízení</div>
+    <div class="sm-qam" style="position:relative;">
+      <div class="qtabs" style="padding:5px 4px 4px;">
+        <div class="qtab">⚡</div><div class="qtab">💎</div><div class="qtab">🔋</div>
+        <div class="qtab">🖥</div><div class="qtab">🎮</div><div class="qtab on">🧩</div>
+      </div>
+      <div class="qhdr">Decky Plugins</div>
+      <div class="qbody" style="position:relative;overflow:visible;">
+        <div class="pah">
+          <span class="pah-logo">🎵</span><span class="pah-title">Spotify Pro</span><span class="pah-dot">●</span>
+        </div>
+        <div class="ptabs">
+          <div class="pt">📋</div><div class="pt on">🎶</div><div class="pt">⚙️</div>
+        </div>
+
+        <!-- Dimmed player content -->
+        <div style="opacity:.4;">
+          <div class="art-card">
+            <div class="art-box"><div class="art-img" style="background:linear-gradient(135deg,#1a1040,#8b2fc9);">🎤</div><div class="art-badge">▶</div></div>
+            <div class="track-info">
+              <div class="t-name">Blinding Lights</div>
+              <div class="t-artist">The Weeknd</div>
+              <div class="t-prog">
+                <span class="t-time">2:15</span>
+                <div class="progbar"><div class="progfill" style="width:64%"></div></div>
+                <span class="t-time">3:20</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Device dropdown -->
+        <div class="dev-list" style="bottom:auto;top:145px;">
+          <div class="dev-row active">
+            <span class="dev-icon">💻</span>
+            <div class="dev-info">
+              <div class="dev-name">Steam Deck</div>
+              <div class="dev-vol">Volume: 70%</div>
+            </div>
+            <span class="dev-check">✓</span>
+          </div>
+          <div class="dev-row">
+            <span class="dev-icon">📱</span>
+            <div class="dev-info">
+              <div class="dev-name">Pixel 8</div>
+              <div class="dev-vol">Volume: 45%</div>
+            </div>
+          </div>
+          <div class="dev-row">
+            <span class="dev-icon">🖥</span>
+            <div class="dev-info">
+              <div class="dev-name">Desktop PC</div>
+              <div class="dev-vol">Volume: 60%</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="font-size:7px;color:#555;text-align:center;margin-top:88px;line-height:1.6;">
+          Klik na device badge otevře dropdown<br>
+          Výběr přesune přehrávání na dané<br>
+          zařízení přes Spotify Web API
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading skeleton -->
+  <div class="sm-card">
+    <div class="sm-label">⏳ Načítání tracků</div>
+    <div class="sm-qam">
+      <div class="qtabs" style="padding:5px 4px 4px;">
+        <div class="qtab">⚡</div><div class="qtab">💎</div><div class="qtab">🔋</div>
+        <div class="qtab">🖥</div><div class="qtab">🎮</div><div class="qtab on">🧩</div>
+      </div>
+      <div class="qhdr">Decky Plugins</div>
+      <div class="qbody">
+        <div class="pah">
+          <span class="pah-logo">🎵</span><span class="pah-title">Spotify Pro</span><span class="pah-dot">●</span>
+        </div>
+        <div class="tl-hdr">
+          <span class="tl-back">← Rock Classics</span>
+        </div>
+        <!-- Skeleton rows -->
+        <div style="display:flex;flex-direction:column;gap:0;">
+          <style>@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}</style>
+          <!-- 6 skeleton items -->
+          <div style="display:flex;align-items:center;gap:6px;padding:7px 5px;border-bottom:1px solid #191919;">
+            <div class="skel" style="width:12px;height:7px;"></div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
+              <div class="skel" style="height:7px;width:72%;"></div>
+              <div class="skel" style="height:6px;width:44%;"></div>
+            </div>
+            <div class="skel" style="width:26px;height:7px;"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;padding:7px 5px;border-bottom:1px solid #191919;">
+            <div class="skel" style="width:12px;height:7px;"></div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
+              <div class="skel" style="height:7px;width:58%;"></div>
+              <div class="skel" style="height:6px;width:38%;"></div>
+            </div>
+            <div class="skel" style="width:26px;height:7px;"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;padding:7px 5px;border-bottom:1px solid #191919;">
+            <div class="skel" style="width:12px;height:7px;"></div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
+              <div class="skel" style="height:7px;width:78%;"></div>
+              <div class="skel" style="height:6px;width:50%;"></div>
+            </div>
+            <div class="skel" style="width:26px;height:7px;"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;padding:7px 5px;border-bottom:1px solid #191919;">
+            <div class="skel" style="width:12px;height:7px;"></div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
+              <div class="skel" style="height:7px;width:60%;"></div>
+              <div class="skel" style="height:6px;width:40%;"></div>
+            </div>
+            <div class="skel" style="width:26px;height:7px;"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;padding:7px 5px;border-bottom:1px solid #191919;">
+            <div class="skel" style="width:12px;height:7px;"></div>
+            <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
+              <div class="skel" style="height:7px;width:65%;"></div>
+              <div class="skel" style="height:6px;width:42%;"></div>
+            </div>
+            <div class="skel" style="width:26px;height:7px;"></div>
+          </div>
+        </div>
+        <div style="font-size:7px;color:#555;text-align:center;margin-top:10px;line-height:1.6;">
+          Animovaný skeleton loader<br>
+          pulse efekt dokud se tracky nenačtou
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Legend -->
+<div class="divider">Klávesové zkratky</div>
+<div style="display:flex;gap:32px;flex-wrap:wrap;justify-content:center;max-width:860px;">
+  <div style="text-align:center;">
+    <div style="font-size:22px;margin-bottom:4px;">⬆⬇</div>
+    <div style="font-size:10px;color:#555;">D-pad navigace<br>playlisty / tracky</div>
+  </div>
+  <div style="text-align:center;">
+    <div style="font-size:22px;margin-bottom:4px;color:#1e6622;">A</div>
+    <div style="font-size:10px;color:#555;">Přehrát vybraný<br>playlist / track</div>
+  </div>
+  <div style="text-align:center;">
+    <div style="font-size:22px;margin-bottom:4px;color:#c22a2a;">B</div>
+    <div style="font-size:10px;color:#555;">Zpět<br>(TrackList → Playlists)</div>
+  </div>
+  <div style="text-align:center;">
+    <div style="font-size:22px;margin-bottom:4px;">•••</div>
+    <div style="font-size:10px;color:#555;">Otevřít / zavřít<br>Quick Access Menu</div>
+  </div>
+  <div style="text-align:center;">
+    <div style="font-size:22px;margin-bottom:4px;">⊙</div>
+    <div style="font-size:10px;color:#555;">Steam tlačítko<br>(zpět do hry)</div>
+  </div>
+</div>
+
+</body>
+</html>
